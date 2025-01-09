@@ -51,16 +51,17 @@ class ATMDisplay:
 class ATMInterface:
     ACTIONS = ['Check Balance', 'Deposit', 'Withdraw', 'Exit']
 
-    def __init__(self, atm, display):
+    def __init__(self, atm: ATM, display: ATMDisplay):
         self.atm = atm
         self.display = display
 
-    def get_amount_input(self, action_type):
+    def get_amount_input(self, action_type: str):
         while True:
             try:
                 amount = float(self.display.prompt_for_amount(action_type))
                 if amount < 1:
-                    self.display.show_error(f"{action_type.capitalize()} amount must be positive.")
+                    self.display.show_error(
+                        f"{action_type.capitalize()} amount must be positive.")
                     continue
                 return amount
             except ValueError:
@@ -91,7 +92,7 @@ class ATMInterface:
         while True:
             self.display.show_menu_options(self.ACTIONS)
             option = self.get_menu_option()
-            
+
             if option == 1:
                 self.handle_balance()
             elif option == 2:
